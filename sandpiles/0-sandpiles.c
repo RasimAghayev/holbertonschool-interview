@@ -11,9 +11,15 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
     int i = 0, j = 0;
     int flags[3][3] = {
-        {0, 0, 0},
-        {0, 0, 0},
-        {0, 0, 0}};
+        {0,
+         0,
+         0},
+        {0,
+         0,
+         0},
+        {0,
+         0,
+         0}};
 
     /* sum grid1 and grid2 into grid1 */
     for (i = 0; i < 3; i++)
