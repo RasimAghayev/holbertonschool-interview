@@ -9,41 +9,35 @@
 
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-    int i = 0, j = 0;
-    int flags[3][3] = {
-        {0,
-         0,
-         0},
-        {0,
-         0,
-         0},
-        {0,
-         0,
-         0}};
+int i = 0, j = 0;
+int flags[3][3] = {
+{0, 0, 0},
+{0, 0, 0},
+{0, 0, 0}};
 
-    /* sum grid1 and grid2 into grid1 */
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            grid1[i][j] = grid1[i][j] + grid2[i][j];
-        }
-    }
-    while (grid1_unstable(grid1, flags))
-    {
-        /* print unstable grid before topple round */
-        printf("=\n");
-        print_grid(grid1);
-        /* for every indicated flag, topple the cell */
-        for (i = 0; i < 3; i++)
-        {
-            for (j = 0; j < 3; j++)
-            {
-                if (flags[i][j])
-                    topple(grid1, i, j);
-            }
-        }
-    }
+/* sum grid1 and grid2 into grid1 */
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+{
+grid1[i][j] = grid1[i][j] + grid2[i][j];
+}
+}
+while (grid1_unstable(grid1, flags))
+{
+/* print unstable grid before topple round */
+printf("=\n");
+print_grid(grid1);
+/* for every indicated flag, topple the cell */
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+{
+if (flags[i][j])
+topple(grid1, i, j);
+}
+}
+}
 }
 
 /**
@@ -57,22 +51,22 @@ void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 
 int grid1_unstable(int grid1[3][3], int flags[3][3])
 {
-    int check = 0, i = 0, j = 0;
+int check = 0, i = 0, j = 0;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (grid1[i][j] > 3)
-            {
-                check = 1;
-                flags[i][j] = 1;
-            }
-            else
-                flags[i][j] = 0;
-        }
-    }
-    return (check);
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+{
+if (grid1[i][j] > 3)
+{
+check = 1;
+flags[i][j] = 1;
+}
+else
+flags[i][j] = 0;
+}
+}
+return (check);
 }
 
 /**
@@ -85,15 +79,15 @@ int grid1_unstable(int grid1[3][3], int flags[3][3])
 
 void topple(int grid1[3][3], int i, int j)
 {
-    grid1[i][j] -= 4;
-    if (i - 1 >= 0)
-        grid1[i - 1][j] += 1;
-    if (i + 1 < 3)
-        grid1[i + 1][j] += 1;
-    if (j - 1 >= 0)
-        grid1[i][j - 1] += 1;
-    if (j + 1 < 3)
-        grid1[i][j + 1] += 1;
+grid1[i][j] -= 4;
+if (i - 1 >= 0)
+grid1[i - 1][j] += 1;
+if (i + 1 < 3)
+grid1[i + 1][j] += 1;
+if (j - 1 >= 0)
+grid1[i][j - 1] += 1;
+if (j + 1 < 3)
+grid1[i][j + 1] += 1;
 }
 
 /**
@@ -104,16 +98,16 @@ void topple(int grid1[3][3], int i, int j)
 
 static void print_grid(int grid[3][3])
 {
-    int i, j;
+int i, j;
 
-    for (i = 0; i < 3; i++)
-    {
-        for (j = 0; j < 3; j++)
-        {
-            if (j)
-                printf(" ");
-            printf("%d", grid[i][j]);
-        }
-        printf("\n");
-    }
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+{
+if (j)
+printf(" ");
+printf("%d", grid[i][j]);
+}
+printf("\n");
+}
 }
