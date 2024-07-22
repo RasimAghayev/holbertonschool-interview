@@ -15,25 +15,25 @@ int flags[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 /* sum grid1 and grid2 into grid1 */
 for (i = 0; i < 3; i++)
 {
- for (j = 0; j < 3; j++)
- {
-  grid1[i][j] = grid1[i][j] + grid2[i][j];
- }
+for (j = 0; j < 3; j++)
+{
+grid1[i][j] = grid1[i][j] + grid2[i][j];
+}
 }
 while (grid1_unstable(grid1, flags))
 {
  /* print unstable grid before topple round */
- printf("=\n");
- print_grid(grid1);
-    /* for every indicated flag, topple the cell */
- for (i = 0; i < 3; i++)
- {
-  for (j = 0; j < 3; j++)
-  {
-   if (flags[i][j])
-    topple(grid1, i, j);
-  }
- }
+printf("=\n");
+print_grid(grid1);
+/* for every indicated flag, topple the cell */
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+{
+if (flags[i][j])
+ topple(grid1, i, j);
+}
+}
 }
 }
 
@@ -52,16 +52,16 @@ int check = 0, i = 0, j = 0;
 
 for (i = 0; i < 3; i++)
 {
-  for (j = 0; j < 3; j++)
-  {
-   if (grid1[i][j] > 3)
-   {
-    check = 1;
-    flags[i][j] = 1;
-   }
-   else
-    flags[i][j] = 0;
-  }
+for (j = 0; j < 3; j++)
+{
+if (grid1[i][j] > 3)
+{
+ check = 1;
+ flags[i][j] = 1;
+}
+else
+ flags[i][j] = 0;
+}
 }
 return (check );
 }
@@ -99,12 +99,12 @@ int i, j;
 
 for (i = 0; i < 3; i++)
 {
-  for (j = 0; j < 3; j++)
-  {
-   if (j)
-    printf(" ");
-   printf("%d", grid[i][j]);
-  }
- printf("\n");
+for (j = 0; j < 3; j++)
+{
+if (j)
+ printf(" ");
+printf("%d", grid[i][j]);
+}
+printf("\n");
 }
 }
