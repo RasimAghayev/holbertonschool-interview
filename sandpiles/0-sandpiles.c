@@ -31,7 +31,7 @@ for (i = 0; i < 3; i++)
 for (j = 0; j < 3; j++)
 {
 if (flags[i][j])
- topple(grid1, i, j);
+topple(grid1, i, j);
 }
 }
 }
@@ -56,14 +56,14 @@ for (j = 0; j < 3; j++)
 {
 if (grid1[i][j] > 3)
 {
- check = 1;
- flags[i][j] = 1;
+check = 1;
+flags[i][j] = 1;
 }
 else
- flags[i][j] = 0;
+flags[i][j] = 0;
 }
 }
-return (check );
+return (check);
 }
 
 /**
@@ -78,13 +78,13 @@ void topple(int grid1[3][3], int i, int j)
 {
 grid1[i][j] -= 4;
 if (i - 1 >= 0)
-  grid1[i - 1][j] += 1;
+grid1[i - 1][j] += 1;
 if (i + 1 < 3)
-  grid1[i + 1][j] += 1;
+grid1[i + 1][j] += 1;
 if (j - 1 >= 0)
-  grid1[i][j - 1] += 1;
+grid1[i][j - 1] += 1;
 if (j + 1 < 3)
-  grid1[i][j + 1] += 1;
+grid1[i][j + 1] += 1;
 }
 
 /**
@@ -102,7 +102,7 @@ for (i = 0; i < 3; i++)
 for (j = 0; j < 3; j++)
 {
 if (j)
- printf(" ");
+printf(" ");
 printf("%d", grid[i][j]);
 }
 printf("\n");
