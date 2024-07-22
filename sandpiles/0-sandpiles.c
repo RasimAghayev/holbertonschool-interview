@@ -49,7 +49,9 @@ topple(grid1, i, j);
  * Return: 1 if unstable, 0 otherwise
  */
 
-int grid1_unstable(int grid1[3][3], int flags[3][3])
+int grid1_unstable(
+int grid1[3][3], 
+int flags[3][3])
 {
 int check = 0, i = 0, j = 0;
 
