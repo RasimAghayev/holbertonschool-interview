@@ -1,6 +1,11 @@
 #!/usr/bin/python3
+"""
+This script reads lines from standard input and computes metrics.
+Metrics include the total file size and the count of different HTTP status codes.
 
-""" script that reads stdin line by line and computes metrics """
+After every 10 lines, or when the script is interrupted with a keyboard signal (CTRL + C),
+it prints the total file size and the number of occurrences of each status code.
+"""
 
 import sys
 
