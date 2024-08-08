@@ -1,45 +1,49 @@
 #!/usr/bin/python3
+"""
+    script that reads stdin line by line and computes metrics
+"""
 import sys
 
-total_size = 0
-status_codes = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0, '404': 0, '405': 0, '500': 0}
-line_count = 0
 
-def print_stats():
-    """Prints the current statistics."""
-    print(f"File size: {total_size}")
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print(f"{code}: {status_codes[code]}")
+def print_msg(codes, file_size):
+    print("File size: {}".format(file_size))
+    for key, val in sorted(codes.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
+
+
+file_size = 0
+code = 0
+count_lines = 0
+codes = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
+}
 
 try:
     for line in sys.stdin:
-        line_count += 1
-        parts = line.split()
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
 
-        # Check if the line has at least 7 parts (IP, -, date, GET, URL, HTTP/version, status code, file size)
-        if len(parts) >= 7:
-            status_code = parts[-2]
-            file_size = parts[-1]
+        if len(parsed_line) > 2:
+            count_lines += 1
 
-            # Update the total file size
-            try:
-                total_size += int(file_size)
-            except ValueError:
-                pass
+            if count_lines <= 10:
+                file_size += int(parsed_line[0])
+                code = parsed_line[1]
 
-            # Update the status code count
-            if status_code in status_codes:
-                status_codes[status_code] += 1
+                if (code in codes.keys()):
+                    codes[code] += 1
 
-        # Print statistics every 10 lines
-        if line_count % 10 == 0:
-            print_stats()
+            if (count_lines == 10):
+                print_msg(codes, file_size)
+                count_lines = 0
 
-except KeyboardInterrupt:
-    # Print statistics on keyboard interrupt
-    print_stats()
-    raise
-
-# Final print (in case there was no interrupt but the input ended)
-print_stats()
+finally:
+    print_msg(codes, file_size)
