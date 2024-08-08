@@ -1,50 +1,45 @@
 #!/usr/bin/python3
-"""
-This script reads lines from standard input and computes metrics.
-Metrics include the total file size and the count of different HTTP status codes.
-
-After every 10 lines, or when the script is interrupted with a keyboard signal (CTRL + C),
-it prints the total file size and the number of occurrences of each status code.
-"""
-
 import sys
 
+total_size = 0
+status_codes = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0, '404': 0, '405': 0, '500': 0}
+line_count = 0
 
-def printsts(dic, size):
-    """ Prints information """
-    print("File size: {:d}".format(size))
-    for i in sorted(dic.keys()):
-        if dic[i] != 0:
-            print("{}: {:d}".format(i, dic[i]))
-
-
-sts = {"200": 0, "301": 0, "400": 0, "401": 0, "403": 0,
-       "404": 0, "405": 0, "500": 0}
-
-count = 0
-size = 0
+def print_stats():
+    """Prints the current statistics."""
+    print(f"File size: {total_size}")
+    for code in sorted(status_codes.keys()):
+        if status_codes[code] > 0:
+            print(f"{code}: {status_codes[code]}")
 
 try:
     for line in sys.stdin:
-        if count != 0 and count % 10 == 0:
-            printsts(sts, size)
+        line_count += 1
+        parts = line.split()
 
-        stlist = line.split()
-        count += 1
+        # Check if the line has at least 7 parts (IP, -, date, GET, URL, HTTP/version, status code, file size)
+        if len(parts) >= 7:
+            status_code = parts[-2]
+            file_size = parts[-1]
 
-        try:
-            size += int(stlist[-1])
-        except:
-            pass
+            # Update the total file size
+            try:
+                total_size += int(file_size)
+            except ValueError:
+                pass
 
-        try:
-            if stlist[-2] in sts:
-                sts[stlist[-2]] += 1
-        except:
-            pass
-    printsts(sts, size)
+            # Update the status code count
+            if status_code in status_codes:
+                status_codes[status_code] += 1
 
+        # Print statistics every 10 lines
+        if line_count % 10 == 0:
+            print_stats()
 
 except KeyboardInterrupt:
-    printsts(sts, size)
+    # Print statistics on keyboard interrupt
+    print_stats()
     raise
+
+# Final print (in case there was no interrupt but the input ended)
+print_stats()
