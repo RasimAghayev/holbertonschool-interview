@@ -20,7 +20,7 @@ stcd = {"200": 0, "301": 0, "400": 0, "401": 0,
 summ = 0
 
 
-def prn_stats():
+def prn_stats(): # return void
     """
     Function that print stats about log
     """
