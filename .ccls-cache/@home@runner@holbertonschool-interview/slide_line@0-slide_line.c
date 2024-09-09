@@ -1,6 +1,6 @@
 #include "slide_line.h"
 
-static void merge_left(int *line, size_t size) {
+static void slide_and_merge_left(int *line, size_t size) {
   size_t write = 0, read = 0;
   while (read < size) {
     if (line[read] == 0) {
@@ -9,38 +9,34 @@ static void merge_left(int *line, size_t size) {
     }
     if (write > 0 && line[write - 1] == line[read]) {
       line[write - 1] *= 2;
-      line[read] = 0;
-    } else if (write != read) {
-      line[write] = line[read];
-      line[read] = 0;
+      read++;
+    } else {
+      line[write++] = line[read++];
     }
-    write++;
-    read++;
+  }
+  while (write < size) {
+    line[write++] = 0;
   }
 }
 
-static void merge_right(int *line, size_t size) {
-  size_t write = size - 1, read = size - 1;
-  while (read < size) { // This condition works because size_t is unsigned
+static void slide_and_merge_right(int *line, size_t size) {
+  size_t write = size;
+  size_t read = size;
+  while (read > 0) {
+    read--;
     if (line[read] == 0) {
-      if (read == 0)
-        break; // Prevent underflow
-      read--;
       continue;
     }
+    write--;
     if (write < size - 1 && line[write + 1] == line[read]) {
       line[write + 1] *= 2;
-      line[read] = 0;
-    } else if (write != read) {
+    } else {
       line[write] = line[read];
-      line[read] = 0;
     }
-    if (write == 0)
-      break; // Prevent underflow
+  }
+  while (write > 0) {
     write--;
-    if (read == 0)
-      break; // Prevent underflow
-    read--;
+    line[write] = 0;
   }
 }
 
@@ -50,9 +46,9 @@ int slide_line(int *line, size_t size, int direction) {
   }
 
   if (direction == SLIDE_LEFT) {
-    merge_left(line, size);
+    slide_and_merge_left(line, size);
   } else {
-    merge_right(line, size);
+    slide_and_merge_right(line, size);
   }
 
   return 1;
