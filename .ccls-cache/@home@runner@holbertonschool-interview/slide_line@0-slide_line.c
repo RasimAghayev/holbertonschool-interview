@@ -1,56 +1,46 @@
 #include "slide_line.h"
 
 static void merge_left(int *line, size_t size) {
-  size_t i, j;
-  for (i = 0; i < size && line[i]; i++) {
-    for (j = i + 1; j < size; j++) {
-      if (line[j] == 0)
-        continue;
-      if (line[i] == line[j]) {
-        line[i] *= 2;
-        line[j] = 0;
-      }
-      break;
+  size_t write = 0, read = 0;
+  while (read < size) {
+    if (line[read] == 0) {
+      read++;
+      continue;
     }
+    if (write > 0 && line[write - 1] == line[read]) {
+      line[write - 1] *= 2;
+      line[read] = 0;
+    } else if (write != read) {
+      line[write] = line[read];
+      line[read] = 0;
+    }
+    write++;
+    read++;
   }
 }
 
 static void merge_right(int *line, size_t size) {
-  size_t i, j;
-  for (i = size - 1; i < size && line[i]; i--) {
-    for (j = i - 1; j < size; j--) {
-      if (line[j] == 0)
-        continue;
-      if (line[i] == line[j]) {
-        line[i] *= 2;
-        line[j] = 0;
-      }
-      break;
+  size_t write = size - 1, read = size - 1;
+  while (read < size) { // This condition works because size_t is unsigned
+    if (line[read] == 0) {
+      if (read == 0)
+        break; // Prevent underflow
+      read--;
+      continue;
     }
-  }
-}
-
-static void slide_left(int *line, size_t size) {
-  size_t i, j = 0;
-  for (i = 0; i < size; i++) {
-    if (line[i] != 0) {
-      line[j++] = line[i];
+    if (write < size - 1 && line[write + 1] == line[read]) {
+      line[write + 1] *= 2;
+      line[read] = 0;
+    } else if (write != read) {
+      line[write] = line[read];
+      line[read] = 0;
     }
-  }
-  for (; j < size; j++) {
-    line[j] = 0;
-  }
-}
-
-static void slide_right(int *line, size_t size) {
-  int i, j = size - 1;
-  for (i = size - 1; i >= 0; i--) {
-    if (line[i] != 0) {
-      line[j--] = line[i];
-    }
-  }
-  for (; j >= 0; j--) {
-    line[j] = 0;
+    if (write == 0)
+      break; // Prevent underflow
+    write--;
+    if (read == 0)
+      break; // Prevent underflow
+    read--;
   }
 }
 
@@ -61,10 +51,8 @@ int slide_line(int *line, size_t size, int direction) {
 
   if (direction == SLIDE_LEFT) {
     merge_left(line, size);
-    slide_left(line, size);
   } else {
     merge_right(line, size);
-    slide_right(line, size);
   }
 
   return 1;
