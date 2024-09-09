@@ -21,11 +21,12 @@ static void merge_left(int *line, size_t size) {
 }
 
 static void merge_right(int *line, size_t size) {
-  size_t i, j;
+  int i, j;
 
-  for (i = size - 1; i < size; i--) {
+  // Start from the end of the array
+  for (i = (int)(size - 1); i >= 0; i--) {
     if (line[i] != 0) {
-      for (j = i - 1; (int)j >= 0; j--) {
+      for (j = i - 1; j >= 0; j--) {
         if (line[j] == 0) {
           continue;
         }
@@ -54,14 +55,14 @@ static void slide_left(int *line, size_t size) {
 }
 
 static void slide_right(int *line, size_t size) {
-  size_t i, j = size - 1;
+  int i, j = (int)(size - 1);
 
-  for (i = size - 1; i < size; i--) {
+  for (i = size - 1; i >= 0; i--) {
     if (line[i] != 0) {
       line[j--] = line[i];
     }
   }
-  for (; j < size; j++) {
+  for (; j >= 0; j--) {
     line[j] = 0;
   }
 }
