@@ -36,13 +36,13 @@ size = pow(3, level);
 
 for (y = 0; y < size; y++)
 {
-  for (x = 0; x < size; x++)
-  {
-    if (is_empty(x, y))
-      printf(" ");
-    else
-      printf("#");
-  }
-  printf("\n");
+for (x = 0; x < size; x++)
+{
+if (is_empty(x, y))
+  printf(" ");
+else
+  printf("#");
+}
+printf("\n");
 }
 }
