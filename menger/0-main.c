@@ -11,7 +11,8 @@
  *
  * Return: EXIT_SUCCESS or EXIT_FAILURE
  */
-int main(int ac, char **av) {
+int main(int ac, char **av) 
+{
   int level;
 
   if (ac < 2) {
