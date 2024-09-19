@@ -9,7 +9,8 @@
  *
  * Return: 1 if the cell should be empty, 0 otherwise
  */
-int is_empty(int x, int y) {
+int is_empty(int x, int y) 
+{
   while (x > 0 || y > 0) {
     if (x % 3 == 1 && y % 3 == 1)
       return (1);
@@ -23,7 +24,8 @@ int is_empty(int x, int y) {
  * menger - Draws a 2D Menger sponge
  * @level: The level of the Menger sponge
  */
-void menger(int level) {
+void menger(int level) 
+{
   int size, x, y;
 
   if (level < 0)
